@@ -1,0 +1,22 @@
+{
+  "// Universal Git Auto-Push Settings": "Add these to your VS Code User Settings",
+  
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableCommitSigning": false,
+  
+  "// Auto-save settings": "",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  
+  "// Git extension settings": "",
+  "git.postCommitCommand": "push",
+  "git.showPushSuccessNotification": true,
+  
+  "// Recommended extensions": "",
+  "// Install these for best experience": "",
+  "// 1. GitLens (eamodio.gitlens)": "",
+  "// 2. Git Graph (mhutchie.git-graph)": "",
+  "// 3. GitHub Pull Requests (GitHub.vscode-pull-request-github)": ""
+}
