@@ -26,7 +26,7 @@ if (-not (Test-Path $modulesPath)) {
 }
 
 Copy-Item "z:\automation\GitAutoSetup.psm1" -Destination $modulesPath -Force
-Write-Host "  ✓ Module installed to: $modulesPath" -ForegroundColor Green
+Write-Host "  [OK] Module installed to: $modulesPath" -ForegroundColor Green
 
 # Add import to profile
 $importLine = "Import-Module GitAutoSetup -DisableNameChecking"
@@ -34,10 +34,10 @@ if (Test-Path $profilePath) {
     $profileContent = Get-Content $profilePath -Raw
     if ($profileContent -notlike "*GitAutoSetup*") {
         Add-Content -Path $profilePath -Value "`n# Git Auto-Setup Helper`n$importLine`n"
-        Write-Host "  ✓ Added to PowerShell profile" -ForegroundColor Green
+        Write-Host "  [OK] Added to PowerShell profile" -ForegroundColor Green
     }
     else {
-        Write-Host "  ✓ Already in PowerShell profile" -ForegroundColor Green
+        Write-Host "  [OK] Already in PowerShell profile" -ForegroundColor Green
     }
 }
 else {
@@ -45,7 +45,7 @@ else {
 # Git Auto-Setup Helper
 $importLine
 "@ | Out-File -FilePath $profilePath -Encoding UTF8
-    Write-Host "  ✓ Created PowerShell profile" -ForegroundColor Green
+    Write-Host "  [OK] Created PowerShell profile" -ForegroundColor Green
 }
 
 Write-Host ""
@@ -56,12 +56,12 @@ Write-Host "[2/4] Configuring VS Code..." -ForegroundColor Yellow
 $vscodeSettingsPath = "$env:APPDATA\Code\User\settings.json"
 
 if (Test-Path $vscodeSettingsPath) {
-    Write-Host "  ℹ VS Code settings found" -ForegroundColor Cyan
-    Write-Host "  📄 Template settings saved to: vscode-settings-template.json" -ForegroundColor White
-    Write-Host "  → Add these manually to your VS Code settings if desired" -ForegroundColor Gray
+    Write-Host "  [INFO] VS Code settings found" -ForegroundColor Cyan
+    Write-Host "  [INFO] Template settings saved to: vscode-settings-template.json" -ForegroundColor White
+    Write-Host "  -> Add these manually to your VS Code settings if desired" -ForegroundColor Gray
 }
 else {
-    Write-Host "  ⚠ VS Code settings not found (VS Code may not be installed)" -ForegroundColor Yellow
+    Write-Host "  [WARN] VS Code settings not found (VS Code may not be installed)" -ForegroundColor Yellow
 }
 
 Write-Host ""
@@ -70,8 +70,8 @@ Write-Host ""
 Write-Host "[3/4] Recommended VS Code extensions..." -ForegroundColor Yellow
 Write-Host ""
 Write-Host "  To enable Git auto-push in VS Code, install:" -ForegroundColor White
-Write-Host "    • GitLens (eamodio.gitlens)" -ForegroundColor Cyan
-Write-Host "    • Git Graph (mhutchie.git-graph)" -ForegroundColor Cyan
+Write-Host "    - GitLens (eamodio.gitlens)" -ForegroundColor Cyan
+Write-Host "    - Git Graph (mhutchie.git-graph)" -ForegroundColor Cyan
 Write-Host ""
 
 $installExtensions = Read-Host "Install recommended extensions now? (y/n)"
@@ -88,10 +88,10 @@ if ($installExtensions -eq 'y' -or $installExtensions -eq 'Y') {
     foreach ($ext in $extensions) {
         try {
             & code --install-extension $ext --force 2>$null
-            Write-Host "    ✓ Installed: $ext" -ForegroundColor Green
+            Write-Host "    [OK] Installed: $ext" -ForegroundColor Green
         }
         catch {
-            Write-Host "    ✗ Failed to install: $ext" -ForegroundColor Red
+            Write-Host "    [ERROR] Failed to install: $ext" -ForegroundColor Red
         }
     }
 }
@@ -119,10 +119,10 @@ Write-Host "  4. Follow the prompts to connect to Git!" -ForegroundColor White
 Write-Host ""
 
 Write-Host "The helper will ask you:" -ForegroundColor Yellow
-Write-Host "  • Do you want to initialize Git?" -ForegroundColor White
-Write-Host "  • Connect to existing repo or create new?" -ForegroundColor White
-Write-Host "  • What's your GitHub username/email?" -ForegroundColor White
-Write-Host "  • Set up auto-push?" -ForegroundColor White
+Write-Host "  - Do you want to initialize Git?" -ForegroundColor White
+Write-Host "  - Connect to existing repo or create new?" -ForegroundColor White
+Write-Host "  - What is your GitHub username/email?" -ForegroundColor White
+Write-Host "  - Set up auto-push?" -ForegroundColor White
 Write-Host ""
 
 Write-Host "See UNIVERSAL-GIT-SETUP.md for full documentation." -ForegroundColor Gray
@@ -134,7 +134,7 @@ if ($openDocs -eq 'y' -or $openDocs -eq 'Y') {
 }
 
 Write-Host ""
-Write-Host "⚠️  Important: Restart your terminal for changes to take effect!" -ForegroundColor Yellow
+Write-Host "[IMPORTANT] Restart your terminal for changes to take effect!" -ForegroundColor Yellow
 Write-Host ""
 
 pause
