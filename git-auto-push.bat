@@ -49,6 +49,10 @@ echo.
 
 REM Enable Git Credential Manager (if not already enabled)
 git config --global credential.helper manager-core > nul 2>&1
+if errorlevel 1 (
+    REM Try alternative credential helper names
+    git config --global credential.helper manager > nul 2>&1
+)
 
 REM Check if there are changes to commit
 echo [4/6] Checking for changes...
