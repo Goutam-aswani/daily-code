@@ -232,13 +232,15 @@ function prompt {
     $originalPrompt = "PS $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
     
     # Check Git setup if not skipped
-    if (-not $global:SkipGitCheck -and -not $global:LastCheckedPath -eq (Get-Location).Path) {
-        $global:LastCheckedPath = (Get-Location).Path
-        # Only check if we're in a directory with files (not system dirs)
-        $currentPath = (Get-Location).Path
-        if ($currentPath -notlike "C:\Windows*" -and $currentPath -notlike "C:\Program Files*") {
-            # Uncomment next line to enable auto-check on directory change
-            # Check-GitSetup
+    if (-not $global:SkipGitCheck) {
+        $currentLocation = (Get-Location).Path
+        if ($global:LastCheckedPath -ne $currentLocation) {
+            $global:LastCheckedPath = $currentLocation
+            # Only check if we're in a directory with files (not system dirs)
+            if ($currentLocation -notlike "C:\Windows*" -and $currentLocation -notlike "C:\Program Files*") {
+                # Uncomment next line to enable auto-check on directory change
+                # Check-GitSetup
+            }
         }
     }
     
@@ -249,6 +251,6 @@ function prompt {
 Export-ModuleMember -Function Check-GitSetup, Initialize-NewGitRepo, Connect-ExistingRepo, Initialize-LocalGit, Add-GitRemote, Setup-AutoPush
 
 Write-Host ""
-Write-Host "✅ Git Auto-Push Helper Loaded!" -ForegroundColor Green
+Write-Host "[OK] Git Auto-Push Helper Loaded!" -ForegroundColor Green
 Write-Host "   Run 'Check-GitSetup' in any folder to set up Git" -ForegroundColor Gray
 Write-Host ""
