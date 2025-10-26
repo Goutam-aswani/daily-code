@@ -4,32 +4,56 @@ This folder contains scripts to automatically commit and push changes to GitHub.
 
 ## Files
 
-- **git-auto-push.bat** - Main script that commits and pushes changes
+- **git-auto-push.bat** - Main script that commits and pushes changes (verbose output)
+- **git-auto-push-shutdown.bat** - Silent version optimized for shutdown (fast, no output)
 - **GitAutoPush-DailyTask.xml** - Windows Task Scheduler configuration (runs daily at 6 PM)
+- **install-shutdown-script.ps1** - Automated installer for shutdown trigger
 
 ## Quick Setup
 
-### Option 1: Install Daily Task (Runs every day at 6 PM)
+### Option 1: Auto-Push on Shutdown ⚡ (RECOMMENDED)
+
+**Best for:** Ensuring code is always pushed when you shut down your PC
+
+See detailed guide: **[SHUTDOWN-SETUP.md](SHUTDOWN-SETUP.md)**
+
+Quick install (requires Administrator):
+```powershell
+# Run the automated installer
+.\install-shutdown-script.ps1
+```
+
+Then follow the prompts to configure Group Policy.
+
+### Option 2: Install Daily Task (Runs every day at 6 PM)
 
 ```powershell
 # Import the scheduled task (run as Administrator)
 schtasks /create /tn "GitAutoPush-Daily" /xml "z:\automation\GitAutoPush-DailyTask.xml"
 ```
 
-### Option 2: Custom Schedule
+### Option 3: Custom Schedule
 
 Create your own schedule using Task Scheduler GUI:
 1. Open Task Scheduler (Win + R, type `taskschd.msc`)
 2. Click "Import Task" and select `GitAutoPush-DailyTask.xml`
 3. Edit the trigger to your preferred schedule (hourly, on login, etc.)
 
-### Option 3: Manual Run
+### Option 4: Manual Run
 
 Double-click `git-auto-push.bat` anytime to run manually.
 
+### 🎯 Recommended: Use Both!
+
+For maximum reliability, use **both** shutdown trigger + daily task:
+- **Shutdown script** - Runs every time you shut down/restart
+- **Daily task** - Backup in case PC stays on for days
+
+They work together safely - if no changes, they just skip.
+
 ## Task Configuration Details
 
-- **Runs**: Daily at 6:00 PM
+- **Daily Task**: Runs at 6:00 PM every day
 - **Only when**: Network is available
 - **Battery**: Runs even on battery power
 - **Timeout**: 10 minutes max execution time
